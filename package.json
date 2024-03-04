@@ -7,12 +7,17 @@
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
+    "lint": "turbo lint",
+    "type-check": "turbo type-check",
     "clean": "turbo run clean && rm -rf node_modules",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\" --ignore-path .gitignore"
   },
   "devDependencies": {
     "prettier": "^3.1.1",
-    "turbo": "latest"
+    "turbo": "latest",
+    "eslint": "^8.56.0",
+    "prettier-plugin-tailwindcss": "^0.5.10",
+    "@repo/typescript-config": "*"
   },
   "packageManager": "yarn@1.22.19",
   "engines": {
