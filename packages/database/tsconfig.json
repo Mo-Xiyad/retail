@@ -1,12 +1,14 @@
 {
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "module": "ES2022",
+    "module": "ESNext",
     "target": "ES2022",
     "outDir": "./dist",
-    "rootDir": "./src",
-    "lib": ["ES2022", "DOM"]
+    "rootDir": "src/schema",
+    "lib": ["ES2022", "DOM"],
+    "esModuleInterop": true,
+    "moduleResolution": "Node"
   },
-  "include": ["./src/**/*"],
+  "include": ["src/schema/**/*"],
   "exclude": ["dist"]
 }
