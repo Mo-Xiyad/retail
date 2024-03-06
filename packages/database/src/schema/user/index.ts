@@ -28,13 +28,3 @@ export const users = mysqlTable(
     departmentIdx: index('users_department_idx').on(table.departmentId)
   })
 );
-export const test = mysqlTable(
-  'test',
-  {
-    id: varchar('user_id', { length: 64 }).primaryKey(), //This is clerkId
-    name: varchar('name', { length: 64 }).notNull()
-  },
-  (table) => ({
-    Idx: index('users_idx').on(table.id)
-  })
-);
