@@ -1272,6 +1272,15 @@
     snakecase-keys "5.4.4"
     tslib "2.4.1"
 
+"@clerk/clerk-react@4.30.7":
+  version "4.30.7"
+  resolved "https://registry.yarnpkg.com/@clerk/clerk-react/-/clerk-react-4.30.7.tgz#759179bb5d670f5f2c672bb257f42c1d7e337093"
+  integrity sha512-+6Q1hVteqn66gFLiCKSqqSdz2MBjsEjs1fkGLAEKZC1GdfOKrH6oWcLuSwUdyqRvJWuyjeIgwq15zoHtXKyztA==
+  dependencies:
+    "@clerk/shared" "1.3.3"
+    "@clerk/types" "3.62.1"
+    tslib "2.4.1"
+
 "@clerk/clerk-sdk-node@4.13.11":
   version "4.13.11"
   resolved "https://registry.yarnpkg.com/@clerk/clerk-sdk-node/-/clerk-sdk-node-4.13.11.tgz#a6447520db13e5594ff2e6fc29ac304d3df3bbd1"
@@ -1285,6 +1294,19 @@
     "@types/node-fetch" "2.6.2"
     camelcase-keys "6.2.2"
     snakecase-keys "3.2.1"
+    tslib "2.4.1"
+
+"@clerk/nextjs@^4.29.9":
+  version "4.29.9"
+  resolved "https://registry.yarnpkg.com/@clerk/nextjs/-/nextjs-4.29.9.tgz#9e1a1900184de79aa741dd32d653ec660ffedbb7"
+  integrity sha512-RsOz+lxlPYJi9cBvhBRqAUVUOMBT20R3ppt3eof97DkqCT6YaHJx/S13XcYUuo6ojYRDDJ/nI6XiLcfpqIJO6g==
+  dependencies:
+    "@clerk/backend" "0.38.3"
+    "@clerk/clerk-react" "4.30.7"
+    "@clerk/clerk-sdk-node" "4.13.11"
+    "@clerk/shared" "1.3.3"
+    "@clerk/types" "3.62.1"
+    path-to-regexp "6.2.1"
     tslib "2.4.1"
 
 "@clerk/shared@1.3.3":
@@ -9307,6 +9329,11 @@ path-to-regexp@0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-0.1.7.tgz#df604178005f522f15eb4490e7247a1bfaa67f8c"
   integrity sha512-5DFkuoqlv1uYQKxy8omFBeJPQcdoE07Kv2sferDCrAq1ohOU+MSDswDIbnx3YAM60qIOnYa53wBhXW0EbMonrQ==
+
+path-to-regexp@6.2.1:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.2.1.tgz#d54934d6798eb9e5ef14e7af7962c945906918e5"
+  integrity sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==
 
 path-type@^4.0.0:
   version "4.0.0"
