@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "main": "dist/index.js",
+  "type": "module",
   "scripts": {
     "dev": "tsc --watch",
     "build": "tsup",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist && rm -rf node_modules && rm -rf .turbo"
   },
   "devDependencies": {
     "@repo/typescript-config": "*",
