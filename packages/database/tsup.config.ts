@@ -3,8 +3,8 @@ import path from 'path';
 import { defineConfig, Options } from 'tsup';
 
 export default defineConfig((options: Options) => ({
-  dts: true,
-  entry: ['src/schema/**/*.{ts,tsx}'],
+  dts: false,
+  entry: ['src/**/*.{ts,tsx}'],
   clean: true,
   bundle: true,
   esbuildPlugins: [

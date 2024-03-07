@@ -3,12 +3,12 @@
   "compilerOptions": {
     "module": "ESNext",
     "target": "ES2022",
-    "outDir": "./dist",
-    "rootDir": "src/schema",
+    // "outDir": "./dist",
+    "rootDir": "./src",
     "lib": ["ES2022", "DOM"],
     "esModuleInterop": true,
-    "moduleResolution": "Node"
+    "moduleResolution": "Bundler"
   },
-  "include": ["src/schema/**/*"],
-  "exclude": ["dist"]
+  "include": ["./src/**/*"]
+  // "exclude": ["dist"]
 }
