@@ -12,7 +12,7 @@ export type Context = {
   res: CreateNextContextOptions['res'];
   user?: {
     id: string;
-    permissions: string[];
+    // permissions: string[];
     isAdmin: boolean;
   };
 
