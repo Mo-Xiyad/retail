@@ -1,25 +1,14 @@
 'use client';
 
 import { Button } from '@repo/ui/src/index';
+import { trpc } from './_trpc/client';
 
-function Gradient({
-  conic,
-  className,
-  small
-}: {
-  small?: boolean;
-  conic?: boolean;
-  className?: string;
-}): JSX.Element {
-  return (
-    <span
-      className={`absolute mix-blend-normal will-change-[filter] rounded-[100%] ${
-        small ? 'blur-[32px]' : 'blur-[75px]'
-      } ${conic ? 'bg-glow-conic' : ''} ${className}`}
-    />
-  );
-}
 export default function Web() {
+  const { data, isLoading } = trpc.test.getUser.useQuery();
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  console.log(data);
   return (
     <div className="flex flex-col items-center justify-center w-screen h-screen bg-gradient-to-br from-[#a79494] to-[#fcfbfb]">
       <h1>Web</h1>
