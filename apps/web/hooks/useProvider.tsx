@@ -4,7 +4,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import { QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
-import { trpc, useTrpcClient } from './_trpc/client';
+import { trpc, useTrpcClient } from '../app/_trpc/client';
 
 export function ClientProviders(props: { children: React.ReactNode }) {
   return (

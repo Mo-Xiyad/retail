@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@repo/ui/src/index';
-import { trpc } from './_trpc/client';
+import { trpc } from '../_trpc/client';
 
 export default function Web() {
   const { data, isLoading } = trpc.test.getUser.useQuery();

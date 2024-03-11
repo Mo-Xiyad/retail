@@ -1,6 +1,6 @@
 import '@repo/ui/src/styles.css';
-import '../styles/global.css';
-import { ClientProviders } from './useProvider';
+import { ClientProviders } from '../../hooks/useProvider';
+import '../../styles/global.css';
 export default function RootLayout({
   children
 }: {
