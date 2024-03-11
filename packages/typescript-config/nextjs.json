@@ -14,7 +14,10 @@
     "resolveJsonModule": true,
     "strict": true,
     "target": "ES2022",
-    "plugins": [{ "name": "next" }]
+    "plugins": [{ "name": "next" }],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src", "next-env.d.ts"],
   "exclude": ["node_modules"]
