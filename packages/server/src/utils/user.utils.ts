@@ -8,9 +8,6 @@ export async function createOrUpdateClerkUser(
     firstName: string;
     lastName: string;
     email: string;
-    department: string;
-    role: string;
-    company: string;
     companyId: number;
     onboarded: boolean;
     permission: string[];
@@ -20,9 +17,6 @@ export async function createOrUpdateClerkUser(
   const clerkPublicMetadata = {
     name: `${userInfo.firstName} ${userInfo.lastName}`,
     email: userInfo.email,
-    department: userInfo.department,
-    role: userInfo.role,
-    company: userInfo.company,
     companyId: userInfo.companyId,
     onboarded: userInfo.onboarded,
     permission: userInfo.permission

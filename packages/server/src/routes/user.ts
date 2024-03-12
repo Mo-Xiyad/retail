@@ -1,9 +1,4 @@
 import { Clerk } from '@clerk/clerk-sdk-node';
-import {
-  company as companyTable,
-  department as departmentTable,
-  role as roleTable
-} from '@repo/database/company';
 import { users as usersTable } from '@repo/database/user';
 import { TRPCError } from '@trpc/server';
 import { eq } from 'drizzle-orm';
@@ -55,27 +50,12 @@ export const usersRouter = router({
         email: z.string().email(),
         firstName: z.string(),
         lastName: z.string(),
-        companyId: z.number(),
-        companyName: z.string(),
-        role: z.string(),
-        department: z.string(),
-        departmentId: z.number(),
-        roleId: z.number()
+        companyId: z.number()
       })
     )
     .mutation(async ({ input, ctx: { db } }) => {
       try {
-        const {
-          email,
-          firstName,
-          lastName,
-          companyId,
-          companyName,
-          role,
-          department,
-          departmentId,
-          roleId
-        } = input;
+        const { email, firstName, lastName, companyId } = input;
 
         const [existingUser] = await db
           .select()
@@ -97,9 +77,6 @@ export const usersRouter = router({
               firstName,
               lastName,
               companyId,
-              company: companyName,
-              department,
-              role,
               onboarded: true,
               permission: []
             },
@@ -116,8 +93,6 @@ export const usersRouter = router({
             firstName,
             lastName,
             companyId,
-            roleId,
-            departmentId,
             onboarded: true
           };
           await tx
@@ -139,41 +114,7 @@ export const usersRouter = router({
           });
         }
       }
-    }),
-  getAllUsers: protectedProcedure.query(async ({ ctx: { db } }) => {
-    try {
-      const users = await db
-        .select({
-          id: usersTable.id,
-          name: usersTable.name,
-          email: usersTable.email,
-          department: departmentTable.name,
-          role: roleTable.name,
-          companyName: companyTable.name,
-          domain: companyTable.domain,
-          joinDate: usersTable.createdAt
-        })
-        .from(usersTable)
-        .leftJoin(
-          departmentTable,
-          eq(departmentTable.id, usersTable.departmentId)
-        )
-        .leftJoin(roleTable, eq(roleTable.id, usersTable.roleId))
-        .leftJoin(companyTable, eq(companyTable.id, usersTable.companyId))
-        .execute();
-      return users;
-    } catch (error) {
-      console.log(error);
-      if (error instanceof TRPCError) {
-        throw error;
-      } else {
-        throw new TRPCError({
-          code: 'INTERNAL_SERVER_ERROR',
-          message: 'Failed to get users'
-        });
-      }
-    }
-  })
+    })
 });
 
 /*
