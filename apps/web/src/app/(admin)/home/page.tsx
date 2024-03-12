@@ -10,7 +10,7 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { trpc } from '../_trpc/client';
+import { trpc } from '../../_trpc/client';
 
 export default function Web() {
   const { data, isLoading } = trpc.test.getUser.useQuery();

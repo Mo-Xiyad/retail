@@ -1,6 +1,14 @@
 module.exports = {
   reactStrictMode: true,
   transpilePackages: ['@repo/ui'],
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'ghjbtufa.pocketspace.dev'
+      }
+    ]
+  },
   webpack: (config) => {
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
