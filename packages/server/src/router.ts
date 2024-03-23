@@ -1,22 +1,29 @@
 import * as companyTables from '@repo/database/company';
 import * as userTables from '@repo/database/user';
 import { TRPCError, initTRPC } from '@trpc/server';
-import type { CreateNextContextOptions } from '@trpc/server/adapters/next';
 import type { PlanetScaleDatabase } from 'drizzle-orm/planetscale-serverless';
+import type { GetServerSidePropsContext } from 'next';
+import type { NextRequest } from 'next/server';
+
 import superjson from 'superjson';
 export type DataBase = PlanetScaleDatabase<
   typeof companyTables & typeof userTables
 >;
 export type Context = {
-  req: CreateNextContextOptions['req'];
-  res: CreateNextContextOptions['res'];
+  req: NextRequest | GetServerSidePropsContext['req'] | null;
   user?: {
     id: string;
-    // permissions: string[];
     isAdmin: boolean;
   };
 
   db: DataBase;
+};
+export const createContextInner = async (opts: Context) => {
+  return {
+    req: opts.req,
+    user: opts.user,
+    db: opts.db
+  };
 };
 
 export const t = initTRPC.context<Context>().create({

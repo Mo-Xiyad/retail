@@ -1,6 +1,5 @@
-import { MainNav } from "./restaurants/[id]/components/main";
-import { Search } from "./restaurants/[id]/components/search";
-import { UserNav } from "./restaurants/[id]/components/user-nav";
+import { UserButton } from '@clerk/nextjs';
+import { MainNav } from './restaurants/[id]/components/main';
 
 export const DashboardHeader = () => {
   return (
@@ -9,7 +8,15 @@ export const DashboardHeader = () => {
         <h2 className=" font-semibold">Feastly</h2>
         <MainNav className="mx-6" />
         <div className="ml-auto flex items-center space-x-4">
-          <UserNav />
+          <UserButton
+            signInUrl="/sign-in"
+            showName
+            appearance={{
+              variables: {
+                colorText: '#5ebaf7'
+              }
+            }}
+          />
         </div>
       </div>
     </div>

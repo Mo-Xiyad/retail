@@ -7,7 +7,6 @@ import { pb } from '@/lib/pb';
 import { Separator } from '@radix-ui/react-dropdown-menu';
 import { TabsContent } from '@radix-ui/react-tabs';
 import { useState } from 'react';
-import { RestaurantsRecord } from '../../../pocketbase-types';
 import { RestaurantCard } from './restaurants/[id]/components/RestaurantCard';
 
 export const getRestaurants = async () => {
@@ -20,7 +19,6 @@ export const getRestaurants = async () => {
 
 export const RestaurantsList = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  // const user = useUser();
 
   const restaurants = useQuery(['restaurant', 'list'], () => getRestaurants());
 
@@ -78,29 +76,20 @@ import {
 } from '@/components/ui/form';
 import { Icons } from '@/components/ui/icons';
 import { toast } from '@/components/ui/use-toast';
-import { handleError } from '@/lib/handle-error';
 // import { useUser } from '@/lib/useUser';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
-import { useMutation, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
+import { trpc } from '../_trpc/client';
 import { queryClient } from './react-query-provider';
 
 const formSchema = z.object({
-  restaurantName: z.string().min(2, {
+  companyName: z.string().min(2, {
     message: 'name must be at least 2 characters.'
   }),
-  address: z.string().min(2, {
-    message: 'address must be at least 2 characters.'
-  }),
-  city: z.string().min(2, {
-    message: 'city must be at least 2 characters.'
-  }),
-  postalCode: z.string().min(2, {
-    message: 'postal code must be at least 2 characters.'
-  }),
-  phoneNumber: z.string().min(7, {
-    message: 'phone number must be at least 7 characters.'
+  orgId: z.string().min(2, {
+    message: 'orgId must be at least 2 characters.'
   })
 });
 
@@ -110,90 +99,39 @@ export function CreateRestaurantForm(props: { close: () => void }) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema)
   });
-
-  const CreateRestaurantMutation = useMutation(
-    (values: z.infer<typeof formSchema>) => {
-      return pb.collection('restaurants').create({
-        name: values.restaurantName,
-        address: values.address,
-        city: values.city,
-        company: 'knno483bn5fyf6c',
-        subdomain: values.restaurantName.toLowerCase().replaceAll(' ', '-'),
-        zip_code: values.postalCode,
-        phone_number: values.phoneNumber
-      } as RestaurantsRecord);
-    },
-    {
-      onSuccess: async () => {
-        await queryClient.invalidateQueries(['restaurant', 'list']);
+  const { mutate } = trpc.company.createCompany.useMutation();
+  function handleSubmit(values: z.infer<typeof formSchema>) {
+    mutate(values, {
+      onSuccess() {
         toast({
-          title: 'Restaurant created',
-          description: 'Your restaurant has been created.'
+          title: 'Restaurant Created',
+          description: 'Restaurant has been created successfully',
+          status: 'success'
         });
+        queryClient.invalidateQueries('company');
         props.close();
       },
-      onError: handleError
-    }
-  );
+      onError(error) {
+        console.log('error', error);
+      }
+    });
+  }
 
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit((values) =>
-          CreateRestaurantMutation.mutate(values)
-        )}
+        onSubmit={form.handleSubmit((values) => handleSubmit(values))}
         className="space-y-6"
       >
         <div className="space-y-2">
           <FormField
             control={form.control}
-            name="restaurantName"
+            name="companyName"
             render={({ field }) => (
               <FormItem className=" space-y-1">
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Company Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Restaurant Name" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <div className="flex items-center gap-2">
-            <FormField
-              control={form.control}
-              name="address"
-              render={({ field }) => (
-                <FormItem className=" space-y-1 w-full">
-                  <FormLabel>Address</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Address" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="city"
-              render={({ field }) => (
-                <FormItem className=" space-y-1 ">
-                  <FormLabel>City </FormLabel>
-                  <FormControl>
-                    <Input placeholder="city" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-          <FormField
-            control={form.control}
-            name="postalCode"
-            render={({ field }) => (
-              <FormItem className=" space-y-1">
-                <FormLabel>Postal Code</FormLabel>
-                <FormControl>
-                  <Input placeholder="Postal Code" {...field} />
+                  <Input placeholder="Company Name" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -201,12 +139,12 @@ export function CreateRestaurantForm(props: { close: () => void }) {
           />
           <FormField
             control={form.control}
-            name="phoneNumber"
+            name="orgId"
             render={({ field }) => (
-              <FormItem className=" space-y-">
-                <FormLabel>Phone Number</FormLabel>
+              <FormItem className=" space-y-1">
+                <FormLabel>Organization Id</FormLabel>
                 <FormControl>
-                  <Input placeholder="Phone Number" {...field} />
+                  <Input placeholder="Organization Id" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -217,7 +155,7 @@ export function CreateRestaurantForm(props: { close: () => void }) {
           {form.formState.isSubmitting && (
             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
           )}
-          Create Restaurant
+          Create Company
         </Button>
       </form>
     </Form>

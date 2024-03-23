@@ -11,20 +11,20 @@ export const trpc = createTRPCReact<AppRouter>({});
 type RouterInput = inferRouterInputs<AppRouter>;
 type RouterOutput = inferRouterOutputs<AppRouter>;
 
-export type TAllUsersOutPut = RouterOutput['user']['getAllUsers'];
+// export type TAllUsersOutPut = RouterOutput['user']['getAllUsers'];
 // type UserOutPut = RouterInput['post']['create'];
 
 export const useTrpcClient = () => {
-  const { getToken } = useAuth();
-  const url = '/api/trpc';
+  const { getToken, userId } = useAuth();
+  console.log('userId', userId);
 
   const [trpcClient, setTrpcClient] = useState(() =>
-    createTrpcClient(url, getToken)
+    createTrpcClient(getToken)
   );
 
   useEffect(() => {
-    setTrpcClient(() => createTrpcClient(url, getToken));
-  }, [url, , getToken]);
+    setTrpcClient(() => createTrpcClient(getToken));
+  }, [getToken]);
 
   const [queryClient] = useState(() => {
     return new QueryClient({
@@ -42,14 +42,15 @@ export const useTrpcClient = () => {
   };
 };
 
-const createTrpcClient = (
-  url: string,
-  getToken: () => Promise<string | null>
-) => {
+const getAppBaseUrl = () => {
+  if (typeof window !== 'undefined') return '';
+  return `http://localhost:3001/api/trpc`;
+};
+const createTrpcClient = (getToken: () => Promise<string | null>) => {
   return trpc.createClient({
     links: [
       httpBatchLink({
-        url: url,
+        url: `${getAppBaseUrl()}`,
         fetch(url, option) {
           return fetch(url, {
             ...option,

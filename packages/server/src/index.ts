@@ -1,5 +1,5 @@
 import type { Context, DataBase } from './router';
-import { router } from './router';
+import { createContextInner, router } from './router';
 import { companyRouter } from './routes/company';
 
 import { testRouter } from './routes/test';
@@ -13,4 +13,4 @@ export const appRouter = router({
 
 export type AppRouter = typeof appRouter;
 
-export { Context, DataBase };
+export { Context, DataBase, createContextInner };
